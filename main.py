@@ -1,21 +1,19 @@
-import time
+from sys import argv, exit
 
-from cal import Calendar
-
-# from gcal import StopwatchApp
-from timer import ShabbasTimer
+import uvicorn
+from gcal import CalendarApp
 
 
 def main():
-    cal = Calendar()
-    # app = StopwatchApp()
-    # app.run()
-    timer = ShabbasTimer()
-    # print(cal.get_current_month)
-    while True:
-        # time_until = timer.get_time_until()
-        # print(time_until)
-        time.sleep(0.5)
+    if len(argv) == 1:
+        tui = CalendarApp()
+        tui.run()
+        return
+    if len(argv) == 2 and argv[1].lower() == "api":
+        uvicorn.run("app:app", host="localhost", port=8000, reload=False)
+    else:
+        print("Wrong argument")
+        exit(1)
 
 
 if __name__ == "__main__":

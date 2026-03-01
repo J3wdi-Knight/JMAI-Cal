@@ -1,30 +1,23 @@
-# gcal.py - graphical calendar
-'''from textual.app import App, ComposeResult
-from textual.widgets import Footer, Header
-
-from cal import Calendar
+from stimer import ShabbasTimer
+from textual.app import App, ComposeResult
+from textual.widgets import Button, Footer, Header, Label
 
 
-class StopwatchApp(App):
-    """A Textual app to manage stopwatches."""
-
-    BINDINGS = [("d", "toggle_dark", "Toggle dark mode")]
-
+class CalendarApp(App):
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
         yield Header()
-        yield Calendar()
+        yield Label("Shabbat start in ...", id="output")
+        yield Button("Wanna know", id="yes")
+        yield Button("Exit", id="exit")
         yield Footer()
 
-    def action_toggle_dark(self) -> None:
-        """An action to toggle dark mode."""
-        self.theme = (
-            "textual-dark" if self.theme == "textual-light" else "textual-light"
-        )
-'''
+    def on_mount(self) -> None:
+        self.screen.styles.border = ("round", "white")
 
-"""
-if __name__ == "__main__":
-    app = StopwatchApp()
-    app.run()
-"""
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "yes":
+            timer = ShabbasTimer()
+            self.query_one("#output", Label).update(timer.get_time())
+        if event.button.id == "exit":
+            self.exit()

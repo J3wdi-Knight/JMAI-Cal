@@ -4,7 +4,6 @@ import geocoder
 import requests
 from astral import LocationInfo, today
 from astral.sun import sun
-from textual.app import ReturnType
 
 
 class ShabbasTimer:
